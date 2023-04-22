@@ -1,0 +1,103 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.1.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers
+{
+    p.GAMG
+    {
+        solver          GAMG;
+        tolerance       1e-8;
+        relTol          0.001;
+        smoother        GaussSeidel;
+        minIter 1;
+    }
+
+    p
+    {
+        solver PBiCGStab;
+        preconditioner DILU;
+        tolerance 1e-8;
+        relTol    1e-4;
+        maxIter 200;
+    }
+
+    pFinal
+    {
+       $p;
+       relTol 0;
+    }
+
+    "(rho|U|h|k|omega|w|Q.*)"
+    {
+        //solver          PBiCGStab;
+	//preconditioner  DILU;
+        solver smoothSolver;
+        smoother symGaussSeidel;
+        tolerance       1e-7;
+        relTol          1e-5;
+        minIter        1;
+    }
+
+    "(rho|U|h|k|omega|w|Q.*)Final"
+    {
+       $U;
+       relTol 0.0;
+    }
+
+}
+
+PIMPLE
+{
+    nOuterCorrectors 5;
+    nCorrectors 1;
+    nNonOrthogonalCorrectors 0;
+    SIMPLErho       false;
+    transonic       yes;
+    consistent      yes;
+    residualControl
+    {
+       "(U|h|e|w|Q.*)" 
+       {
+           tolerance 1.e-5;
+           relTol 1.e-4;
+       }
+       p
+       {
+           tolerance 1.e-5;
+           relTol 1.e-4;
+       }
+    }
+}
+
+relaxationFactors
+{
+  fields
+    {
+      p               1;
+      ".*Final"       1;
+    }
+  equations
+    {
+      "U.*"           0.7;
+      "(e|h).*"       0.7;
+      "(k|omega).*"   0.7;
+      "(w|Q.*).*"     0.5;
+    }
+}
+
+
+// ************************************************************************* //

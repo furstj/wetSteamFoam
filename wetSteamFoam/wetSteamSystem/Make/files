@@ -1,0 +1,19 @@
+wetSteamSystem.C
+steamThermo/steamThermos.C
+steamThermo/makeGasProperties.C
+saturationCurves/saturationCurve/saturationCurve.C
+saturationCurves/saturationIAPWS95/saturationIAPWS95.C
+saturationCurves/saturationIF97/saturationIF97.C
+turbulentWetSteamModels/turbulentWetSteamModels.C
+condensationModels/condensationModel/condensationModel.C
+condensationModels/condensationNone/condensationNone.C
+condensationModels/condensationEquilibrium/condensationEquilibrium.C
+condensationModels/condensationWilson/condensationWilson.C
+condensationModels/condensationMonodispersion/condensationMonodispersion.C
+condensationModels/condensationMomentum/condensationMomentum.C
+liquidProperties/H2O_DBB/H2O_DBB.C
+liquidProperties/H2O_IAPWS/H2O_IAPWS.C
+gasProperties/gasProperties.C
+gasProperties/makeGasProperties.C
+
+LIB = $(FOAM_USER_LIBBIN)/libwetSteamSystem

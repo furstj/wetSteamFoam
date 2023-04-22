@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "saturationCurve.C": "cpp",
+        "condensationModel.C": "cpp"
+    }
+}

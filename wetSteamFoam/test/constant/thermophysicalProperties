@@ -1,0 +1,56 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      thermophysicalProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+thermoType
+{
+    type            wetSteamThermo;
+    mixture         pureMixture;
+    transport       sutherland;
+    thermo          janaf;
+    equationOfState perfectGas;
+    specie          specie;
+    energy          sensibleEnthalpy;
+}
+
+mixture  // H2O from JANAF
+{
+    specie
+    {
+        molWeight       18.0153;
+    }
+    thermodynamics
+    {
+        Tlow            200;
+        Thigh           6000;
+        Tcommon         1000;
+        highCpCoeffs    ( 2.67704 0.00297318 -7.73769e-07 9.44335e-11 -4.269e-15 -29885.9 6.88255 );
+        lowCpCoeffs     ( 4.19864 -0.0020364 6.52034e-06 -5.48793e-09 1.77197e-12 -30293.7 -0.849009 );
+    }
+    transport
+    {
+        As          1.4792e-06;
+        Ts          116;
+    }
+}
+
+
+saturationCurve IAPWS95;
+
+condensationModel none;
+
+
+// ************************************************************************* //
